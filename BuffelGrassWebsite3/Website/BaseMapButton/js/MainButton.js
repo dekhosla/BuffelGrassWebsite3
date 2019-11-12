@@ -176,7 +176,7 @@
             // Navigate to the selected feature;
             view.goTo(featuresMap[featureId]);
         });
-        view.ui.add("container", "top-right");
+        //view.ui.add("container", "top-left");
 
         var hoodsLayerView;
         var featuresMap = {};

@@ -1,0 +1,439 @@
+{
+  "currentVersion": 10.41,
+  "id": 42,
+  "name": "TUCSON_INCIDENTS_PUBLIC_45D",
+  "type": "Feature Layer",
+  "description": "",
+  "geometryType": "esriGeometryPoint",
+  "copyrightText": "",
+  "parentLayer": null,
+  "subLayers": [],
+  "minScale": 0,
+  "maxScale": 0,
+  "drawingInfo": {
+    "renderer": {
+      "type": "simple",
+      "symbol": {
+        "type": "esriSMS",
+        "style": "esriSMSCircle",
+        "color": [
+          0,
+          158,
+          137,
+          255
+        ],
+        "size": 4,
+        "angle": 0,
+        "xoffset": 0,
+        "yoffset": 0,
+        "outline": {
+          "color": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "width": 1
+        }
+      },
+      "label": "",
+      "description": ""
+    },
+    "transparency": 0,
+    "labelingInfo": null
+  },
+  "defaultVisibility": true,
+  "extent": {
+    "xmin": 405068.80971128494,
+    "ymin": 272474.2080052495,
+    "xmax": 1145542.9911417328,
+    "ymax": 691799.5344488174,
+    "spatialReference": {
+      "wkid": 2868,
+      "latestWkid": 2868
+    }
+  },
+  "hasAttachments": false,
+  "htmlPopupType": "esriServerHTMLPopupTypeAsHTMLText",
+  "displayField": "NHA_NAME",
+  "typeIdField": null,
+  "fields": [
+    {
+      "name": "OBJECTID",
+      "type": "esriFieldTypeOID",
+      "alias": "OBJECTID",
+      "domain": null
+    },
+    {
+      "name": "INCI_ID",
+      "type": "esriFieldTypeString",
+      "alias": "INCI_ID",
+      "length": 12,
+      "domain": null
+    },
+    {
+      "name": "agency",
+      "type": "esriFieldTypeString",
+      "alias": "agency",
+      "length": 4,
+      "domain": null
+    },
+    {
+      "name": "ADDRESS_PUBLIC",
+      "type": "esriFieldTypeString",
+      "alias": "ADDRESS_PUBLIC",
+      "length": 1073741822,
+      "domain": null
+    },
+    {
+      "name": "DATE_REPT",
+      "type": "esriFieldTypeDate",
+      "alias": "DATE_REPT",
+      "length": 8,
+      "domain": null
+    },
+    {
+      "name": "HOUR_REPT",
+      "type": "esriFieldTypeString",
+      "alias": "HOUR_REPT",
+      "length": 4,
+      "domain": null
+    },
+    {
+      "name": "DATETIME_REPT",
+      "type": "esriFieldTypeDate",
+      "alias": "DATETIME_REPT",
+      "length": 8,
+      "domain": null
+    },
+    {
+      "name": "MONTH_REPT",
+      "type": "esriFieldTypeString",
+      "alias": "MONTH_REPT",
+      "length": 34,
+      "domain": {
+        "type": "codedValue",
+        "name": "TPD_Month",
+        "codedValues": [
+          {
+            "name": "May",
+            "code": "05-May"
+          },
+          {
+            "name": "Jan",
+            "code": "01-Jan"
+          },
+          {
+            "name": "Feb",
+            "code": "02-Feb"
+          },
+          {
+            "name": "Mar",
+            "code": "03-Mar"
+          },
+          {
+            "name": "Apr",
+            "code": "04-Apr"
+          },
+          {
+            "name": "Jun",
+            "code": "06-Jun"
+          },
+          {
+            "name": "Jul",
+            "code": "07-Jul"
+          },
+          {
+            "name": "Aug",
+            "code": "08-Aug"
+          },
+          {
+            "name": "Sep",
+            "code": "09-Sep"
+          },
+          {
+            "name": "Oct",
+            "code": "10-Oct"
+          },
+          {
+            "name": "Nov",
+            "code": "11-Nov"
+          },
+          {
+            "name": "Dec",
+            "code": "12-Dec"
+          }
+        ]
+      }
+    },
+    {
+      "name": "YEAR_REPT",
+      "type": "esriFieldTypeInteger",
+      "alias": "YEAR_REPT",
+      "domain": null
+    },
+    {
+      "name": "DOW_REPT",
+      "type": "esriFieldTypeString",
+      "alias": "DOW_REPT",
+      "length": 33,
+      "domain": {
+        "type": "codedValue",
+        "name": "TPD_DayofWeek",
+        "codedValues": [
+          {
+            "name": "Su",
+            "code": "1-Su"
+          },
+          {
+            "name": "Mo",
+            "code": "2-Mo"
+          },
+          {
+            "name": "Tu",
+            "code": "3-Tu"
+          },
+          {
+            "name": "We",
+            "code": "4-We"
+          },
+          {
+            "name": "Th",
+            "code": "5-Th"
+          },
+          {
+            "name": "Fr",
+            "code": "6-Fr"
+          },
+          {
+            "name": "Sa",
+            "code": "7-Sa"
+          }
+        ]
+      }
+    },
+    {
+      "name": "TIME_REPT",
+      "type": "esriFieldTypeString",
+      "alias": "TIME_REPT",
+      "length": 4,
+      "domain": null
+    },
+    {
+      "name": "DATE_OCCU",
+      "type": "esriFieldTypeDate",
+      "alias": "DATE_OCCU",
+      "length": 8,
+      "domain": null
+    },
+    {
+      "name": "HOUR_OCCU",
+      "type": "esriFieldTypeString",
+      "alias": "HOUR_OCCU",
+      "length": 4,
+      "domain": null
+    },
+    {
+      "name": "DATE_FND",
+      "type": "esriFieldTypeDate",
+      "alias": "DATE_FND",
+      "length": 8,
+      "domain": null
+    },
+    {
+      "name": "HOUR_FND",
+      "type": "esriFieldTypeString",
+      "alias": "HOUR_FND",
+      "length": 4,
+      "domain": null
+    },
+    {
+      "name": "reportedas",
+      "type": "esriFieldTypeString",
+      "alias": "reportedas",
+      "length": 15,
+      "domain": null
+    },
+    {
+      "name": "NEIGHBORHD",
+      "type": "esriFieldTypeString",
+      "alias": "NEIGHBORHD",
+      "length": 8,
+      "domain": null
+    },
+    {
+      "name": "emdivision",
+      "type": "esriFieldTypeString",
+      "alias": "emdivision",
+      "length": 4,
+      "domain": null
+    },
+    {
+      "name": "emunit",
+      "type": "esriFieldTypeString",
+      "alias": "emunit",
+      "length": 50,
+      "domain": null
+    },
+    {
+      "name": "OFFENSE",
+      "type": "esriFieldTypeString",
+      "alias": "OFFENSE",
+      "length": 25,
+      "domain": null
+    },
+    {
+      "name": "STATUTDESC",
+      "type": "esriFieldTypeString",
+      "alias": "STATUTDESC",
+      "length": 60,
+      "domain": null
+    },
+    {
+      "name": "APPSTATE",
+      "type": "esriFieldTypeSmallInteger",
+      "alias": "APPSTATE",
+      "domain": null
+    },
+    {
+      "name": "UAPremise",
+      "type": "esriFieldTypeString",
+      "alias": "UAPremise",
+      "length": 4,
+      "domain": null
+    },
+    {
+      "name": "UAPremiseDesc",
+      "type": "esriFieldTypeString",
+      "alias": "UAPremiseDesc",
+      "length": 55,
+      "domain": null
+    },
+    {
+      "name": "CLEARANCE_DATE",
+      "type": "esriFieldTypeDate",
+      "alias": "CLEARANCE_DATE",
+      "length": 8,
+      "domain": null
+    },
+    {
+      "name": "Method",
+      "type": "esriFieldTypeString",
+      "alias": "Method",
+      "length": 4,
+      "domain": null
+    },
+    {
+      "name": "MethodDesc",
+      "type": "esriFieldTypeString",
+      "alias": "MethodDesc",
+      "length": 55,
+      "domain": null
+    },
+    {
+      "name": "LOC_STATUS",
+      "type": "esriFieldTypeString",
+      "alias": "LOC_STATUS",
+      "length": 20,
+      "domain": null
+    },
+    {
+      "name": "WARD",
+      "type": "esriFieldTypeString",
+      "alias": "WARD",
+      "length": 15,
+      "domain": null
+    },
+    {
+      "name": "NHA_NAME",
+      "type": "esriFieldTypeString",
+      "alias": "NHA_NAME",
+      "length": 38,
+      "domain": null
+    },
+    {
+      "name": "DIVISION",
+      "type": "esriFieldTypeString",
+      "alias": "DIVISION",
+      "length": 50,
+      "domain": null
+    },
+    {
+      "name": "DIVISION_NO",
+      "type": "esriFieldTypeString",
+      "alias": "DIVISION_NO",
+      "length": 10,
+      "domain": null
+    },
+    {
+      "name": "DIVSECT",
+      "type": "esriFieldTypeString",
+      "alias": "DIVSECT",
+      "length": 4,
+      "domain": null
+    },
+    {
+      "name": "TRSQ",
+      "type": "esriFieldTypeString",
+      "alias": "TRSQ",
+      "length": 12,
+      "domain": null
+    },
+    {
+      "name": "X",
+      "type": "esriFieldTypeDouble",
+      "alias": "X",
+      "domain": null
+    },
+    {
+      "name": "Y",
+      "type": "esriFieldTypeDouble",
+      "alias": "Y",
+      "domain": null
+    },
+    {
+      "name": "Shape",
+      "type": "esriFieldTypeGeometry",
+      "alias": "Shape",
+      "domain": null
+    }
+  ],
+  "indexes": [
+    {
+      "name": "R1612_pk",
+      "fields": "OBJECTID",
+      "isAscending": true,
+      "isUnique": true,
+      "description": ""
+    },
+    {
+      "name": "S1528_idx",
+      "fields": "Shape",
+      "isAscending": true,
+      "isUnique": true,
+      "description": ""
+    }
+  ],
+  "relationships": [],
+  "canModifyLayer": false,
+  "canScaleSymbols": false,
+  "hasLabels": false,
+  "capabilities": "Map,Query,Data",
+  "maxRecordCount": 1000,
+  "supportsStatistics": true,
+  "supportsAdvancedQueries": true,
+  "supportedQueryFormats": "JSON, AMF, geoJSON",
+  "ownershipBasedAccessControlForFeatures": { "allowOthersToQuery": true },
+  "useStandardizedQueries": true,
+  "advancedQueryCapabilities": {
+    "useStandardizedQueries": true,
+    "supportsStatistics": true,
+    "supportsOrderBy": true,
+    "supportsDistinct": true,
+    "supportsPagination": true,
+    "supportsTrueCurve": true,
+    "supportsReturningQueryExtent": true,
+    "supportsQueryWithDistance": true
+  },
+  "dateFieldsTimeReference": null
+}

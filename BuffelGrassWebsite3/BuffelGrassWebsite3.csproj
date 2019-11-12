@@ -69,6 +69,13 @@
   <ItemGroup>
     <Content Include="CSS\MainCss.css" />
     <Content Include="index.html" />
+    <Content Include="js\terraformer-arcgis-parser\Gruntfile.js" />
+    <Content Include="js\terraformer-arcgis-parser\spec\arcgisSpec.js" />
+    <Content Include="js\terraformer-arcgis-parser\terraformer-arcgis-parser.js" />
+    <Content Include="js\terraformer-arcgis-parser\terraformer-arcgis-parser.min.js" />
+    <Content Include="js\terraformer\gruntfile.js" />
+    <Content Include="js\terraformer\terraformer.js" />
+    <Content Include="js\terraformer\terraformer.min.js" />
     <Content Include="Web.config" />
     <Content Include="Website\BaseMapButton\BaseMapButton.html" />
     <Content Include="Website\BaseMapButton\CSS\MainButton.css" />
@@ -77,22 +84,50 @@
     <Content Include="Website\BaseMap\BaseMapIndex.html" />
     <Content Include="Website\BaseMap\CSS\main.css" />
     <Content Include="Website\BaseMap\js\main.js" />
+    <Content Include="Website\CSV\CSVhtml.html" />
+    <Content Include="Website\CSV\JS\CSVjs.js" />
+    <Content Include="Website\DisplayWebApp\CSS\mainc.css" />
+    <Content Include="Website\DisplayWebApp\js\webAppjs.js" />
+    <Content Include="Website\DisplayWebApp\webApp.html" />
+    <Content Include="Website\JsonDisplay\DisplayJson.html" />
+    <Content Include="Website\JsonDisplay\js\jsonJS.js" />
+    <Content Include="Website\SelectionMarker\js\markerjs.js" />
+    <Content Include="Website\SelectionMarker\Marker.html" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Website\Data\Usa.json" />
+    <Content Include="Website\Data\canada.json" />
+    <Content Include="js\terraformer-arcgis-parser\.bower.json" />
+    <Content Include="js\terraformer-arcgis-parser\.gitignore" />
+    <Content Include="js\terraformer-arcgis-parser\.npmingnore" />
+    <Content Include="js\terraformer-arcgis-parser\bower.json" />
+    <Content Include="js\terraformer-arcgis-parser\package.json" />
+    <Content Include="js\terraformer-arcgis-parser\README.md" />
+    <Content Include="js\terraformer\.bower.json" />
+    <Content Include="js\terraformer\.gitignore" />
+    <Content Include="js\terraformer\.npmignore" />
+    <Content Include="js\terraformer\.travis.yml" />
+    <Content Include="js\terraformer\bower.json" />
+    <Content Include="js\terraformer\LICENSE" />
+    <Content Include="js\terraformer\package.json" />
+    <Content Include="js\terraformer\README.md" />
     <None Include="packages.config" />
-    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+    <Content Include="Website\Data\pointData.json" />
+    <Content Include="Website\Data\crimeData.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="partial\" />
+    <Folder Include="Properties\PublishProfiles\" />
+    <Folder Include="Website\JsonDisplay\CSS\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
