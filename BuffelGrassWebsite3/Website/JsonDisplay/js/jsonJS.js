@@ -45,6 +45,8 @@ require(["esri/map",
         on(dom.byId("btnAddUsa"), "click", getGeoJSON);
         on(dom.byId("btnPointData"), "click", getGeoJSON);
         on(dom.byId("btnCrimeData"), "click", getGeoJSON);
+        on(dom.byId("btnBuffelData"), "click", getGeoJSON);
+       
 
         // Get the GeoJSON to add - file or endpoint will work
         function getGeoJSON(e) {

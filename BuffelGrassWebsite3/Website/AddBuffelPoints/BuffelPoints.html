@@ -1,0 +1,94 @@
+﻿
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+          content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>Intro to FeatureLayer - 4.13</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
+    <title>Graphics Toolbar</title>
+    <link rel="shortcut icon" href="//esri.github.io/quickstart-map-js/images/favicon.ico">
+    <!-- ArcGIS API for JavaScript CSS-->
+    <link rel="stylesheet" href="//js.arcgis.com/3.10/js/esri/css/esri.css">
+    <!-- Web Framework - Bootstrap (getbootstrap.com) and Bootstrap-map-js (github.com/esri/bootstrap-map-js) -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//esri.github.io/bootstrap-map-js/src/css/bootstrapmap.css">
+
+    <style>
+
+        html, body, #mapDiv {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+    <!-- ArcGIS API for JavaScript library references -->
+    <script src="//js.arcgis.com/3.10compact"></script>
+
+    <link rel="stylesheet"
+          href="https://js.arcgis.com/4.13/esri/themes/light/main.css" />
+    <script src="https://js.arcgis.com/4.13/"></script>
+    <link href="../../CSS/MainCss.css" rel="stylesheet" />
+    <style>
+
+        html,
+        body,
+        #viewDiv {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+
+    <!-- <script src="js/BuffelJs.js"></script>-->
+    <script src="js/BuffelPointMarker.js"></script>
+</head>
+<body>
+    <div class="container" style="margin-top:10px;">
+        <div class="row" style="text-align:center;">
+            <div>
+                <div style="text-align:center;">
+                    <a class="button" style="background-color: #9EABAE" href="../../index.html">&nbsp Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-primary panel-fixed" style="margin-top:25px;">
+        <div class="panel-heading">
+            <h3 class="panel-title">Draw Graphics Widget</h3>
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                <div class="btn-group">
+                    <!--<button class="btn btn-success" id="addPoint">Add Point</button>
+                    <button class="btn btn-success" id="addLine">Add Line</button>-->
+                    <button class="btn btn-success" id="addPolygon">Add Polygon</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <select class="form-control" id="symbol">
+                    <!-- <option value="">--- Symbol Options ---</option>
+                    <option value="">--- Point ---</option>
+                    <option value="new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_SQUARE, 7, new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new color([255,0,0]), 1), new color([255,0,0,1]))">Default</option>
+                    <option value="new SimpleMarkerSymbol().setColor(new color([0, 0, 255]))">Circle</option>
+                    <option value="new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_DIAMOND, 20, new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new color([0,0,0]), 1), new color([255,255,0,0.5]))">Diamond</option>
+                    <option value="">--- Simple Line ---</option>
+                    <option value="new SimpleLineSymbol()">Default</option>
+                    <option value="new SimpleLineSymbol(SimpleLineSymbol.STYLE_DASH, new color([255,0,0]), 3)">Dash</option>
+                    <option value="new SimpleLineSymbol(SimpleLineSymbol.STYLE_DOT, new color([255,0,0]), 5)">Dot</option>
+                    <option value="">--- Cartographic Line Symbols ---</option>-->
+                    <option value="new CartographicLineSymbol()">Default</option>
+                    <option value="new CartographicLineSymbol(CartographicLineSymbol.STYLE_SOLID, new color([255,0,0]), 10, CartographicLineSymbol.CAP_ROUND, CartographicLineSymbol.JOIN_ROUND)">Solid, round cap, round join</option>
+                    <option value="new CartographicLineSymbol(CartographicLineSymbol.STYLE_SOLID, new color([255,0,0]), 10, CartographicLineSymbol.CAP_SQUARE, CartographicLineSymbol.JOIN_BEVEL)">Solid, square cap, bevel join</option>
+                </select>
+            </div>
+            <p><button class="btn btn-default" id="clear">Clear</button></p>
+            <div id="userMessage">Click a button to start.</div>
+        </div>
+    </div>
+    <div id="viewDiv"></div>
+</body>
+</html>

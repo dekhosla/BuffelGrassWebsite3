@@ -1,4 +1,6 @@
-﻿.col-md-4 {
+﻿/*Used for main screen button*/
+
+.col-md-4 {
     width: 40%;
     height: 80px;
     border: 1px solid blue;
@@ -11,6 +13,15 @@
     text-align: center;
     border-radius: 25px;
 }
+.btn.focus, .btn:focus, .btn:hover {
+    text-decoration: none;
+    color: #cc665e;
+}
+.container {
+    position: static;
+    width: 90%;
+}
+/*Used for navigation button*/
 .payNav {
     margin-top: 150px;
     margin-bottom: 25px;

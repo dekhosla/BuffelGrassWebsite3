@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script></script>
+  
+</head>
+<body>
+   
+    <select class="col-xs-3" name="list" id="list">
+        <option value="" selected>  Select List</option>
+    </select>
+
+    <script>
+        var select = document.getElementById('list');
+        var items = [{ text: 'Day1', value: 'value1' }, { text: 'Day2', value: 'value2' }, { text: 'Day3', value: 'value3' }];
+        var options = [];
+
+        for (var i = 0; i < items.length; i++)
+            options.push('<option value="' + items[i].text + '">' + items[i].text + '</option>');
+        select.innerHTML = options.join('');
+        var loc = window.location.pathname;
+      
+        var dir = loc.substring(0, loc.lastIndexOf('/'));     
+        var tree = directoryTree('../../tiles1');
+        var filteredTree = directoryTree('/some/path', ['.jpg', '.png']);
+
+    </script>
+</body>
+</html>

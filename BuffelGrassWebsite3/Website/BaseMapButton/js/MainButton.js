@@ -4,17 +4,170 @@
     "esri/layers/FeatureLayer",
     "esri/views/MapView",
     "esri/PopupTemplate",
+    "esri/renderers/Renderer",
     "esri/renderers/UniqueValueRenderer",
     "esri/symbols/SimpleMarkerSymbol",
     "esri/tasks/support/Query",
     "dojo/dom-construct",
     "dojo/on",
     "dojo/dom",
-    "dojo/domReady!"
+    "dojo/domReady!",
+    
 ], function (watchUtils, Map, FeatureLayer, MapView, PopupTemplate, UniqueValueRenderer,
     SimpleMarkerSymbol, Query, domConstruct, on, dom) {
 
-        var halfMileSymbol = new SimpleMarkerSymbol({
+
+    var buffelStation = new FeatureLayer({
+        //Fuel Station
+       // url: "https://services1.arcgis.com/Ezk9fcjSUkeadg6u/ArcGIS/rest/services/BuffelgrassParcelSurvey/FeatureServer/0",
+       // url:"http://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/USA_Counties/FeatureServer/0",
+        //url: "https://services1.arcgis.com/Ezk9fcjSUkeadg6u/ArcGIS/rest/services/buffelgrass_560/FeatureServer/0",
+       // url:"http://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/Join%20Features%20to%20United%20States%20ZIP%20Code%20Boundaries%202016/FeatureServer/0",
+      url:"https://services1.arcgis.com/Ezk9fcjSUkeadg6u/ArcGIS/rest/services/BGpts_from_JM/FeatureServer/0",
+        //fields: fields,
+        //renderer: renderer,
+        opacity: 0.50
+       // renderer: foodRenderer,
+
+        //definitionExpression: "Sci_Name = 'Ulmus pumila'"
+    });
+
+    var hoods = new FeatureLayer({
+        //Neighborhoods
+        url: "http://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Palm_Springs_Neighborhoods/FeatureServer/0",
+        opacity: 0.50
+    });
+
+        const layer = new FeatureLayer({
+
+            // create an instance of esri/layers/support/Field for each field object
+            fields: [
+                {
+                    name: "ObjectID",
+                    alias: "ObjectID",
+                    type: "oid"
+                }, {
+                    name: "type",
+                    alias: "Type",
+                    type: "string"
+                }, {
+                    name: "place",
+                    alias: "Place",
+                    type: "string"
+                }],
+            objectIdField: "ObjectID",
+            geometryType: "point",
+            spatialReference: { wkid: 4326 },
+            source: graphics,  //  an array of graphics with geometry and attributes
+            // popupTemplate and symbol are not required in each feature
+            // since those are handled with the popupTemplate and
+            // renderer properties of the layer
+            popupTemplate: pTemplate,
+            renderer: uvRenderer  // UniqueValueRenderer based on `type` attribute
+        });
+        map.add(layer);
+
+    var map = new Map({
+        basemap: "streets-vector",
+        layers: [buffelStation]
+    });
+
+    var view = new MapView({
+        container: "viewDiv",
+        map: map,
+        //zoom: 15,
+        //center: [-116.5403668778997, 33.82106252508553],
+        /*For Arizona:-   zoom: 6, center: [-111.0937, 34.0489],*/
+        zoom: 15,
+        center: [-111.0937, 34.0489],
+        popup: {
+            dockEnabled: true,
+            dockOptions: {
+                buttonEnabled: true,
+                position: "upper-right"
+            }
+        }
+    });
+
+       // map.addLayer(featureLayer3);
+    // Listen for the change event on the dropdown
+    // and set the layer's definition expression to the chosen value
+    var select = dom.byId("selectNeighborhood");
+    on(select, "change", function (e) {
+        var featureId = select.value;
+        var expr = select.value === "" ? "" : "OBJECTID = '" + featureId + "'";
+        hoods.definitionExpression = expr;
+
+        // Navigate to the selected feature;
+        view.goTo(featuresMap[featureId]);
+    });
+
+    var hoodsLayerView;
+    var featuresMap = {};
+
+    view.whenLayerView(hoods).then(function (lyrView) {
+        hoodsLayerView = lyrView;
+        //  Make sure that the layer is not updating and currently fetching data
+        return watchUtils.whenFalseOnce(hoodsLayerView, "updating");
+    }).then(function () {
+        // Query all features in the layerview and return the results
+        return hoods.queryFeatures();
+    }).then(function (results) {
+        // Build a dropdown for each unique value in Neighborhood field
+        results.features.forEach(function (feature) {
+            var featureId = feature.attributes.OBJECTID;
+            var uniqueVal = feature.attributes.NAME;
+            domConstruct.create("option", {
+                value: featureId,
+                innerHTML: uniqueVal
+            }, "selectNeighborhood");
+
+            featuresMap[featureId] = feature;
+        });
+        });
+
+
+    //Gas station
+    var selected = dom.byId("selectfuelStation");
+    on(selected, "change", function (e) {
+        var featureId = selected.value;
+        var expr = selected.value === "" ? "" : "FID = '" + buffelStation + "'";
+        //var expr =  "FID = '3'" ;
+        buffelStation.definitionExpression = expr;
+
+        // Navigate to the selected feature;
+        view.goTo(featuresMap3[featureId]);
+    });
+
+
+
+    var buffelStationLayerView;
+    var featuresMap3 = {};
+
+    view.whenLayerView(buffelStation).then(function (lyrView) {
+        buffelStationLayerView = lyrView;
+        //  Make sure that the layer is not updating and currently fetching data
+        return watchUtils.whenFalseOnce(buffelStationLayerView, "updating");
+    }).then(function () {
+        // Query all features in the layerview and return the results
+        return buffelStation.queryFeatures();
+    }).then(function (results) {
+        // Build a dropdown for each unique value in Neighborhood field
+        results.features.forEach(function (feature) {
+            var featureId = feature.attributes.FID;
+            var uniqueVal = feature.attributes.FID;            
+            domConstruct.create("option", {
+                value: featureId,
+                innerHTML: uniqueVal
+            }, "selectfuelStation");
+
+            featuresMap3[featureId] = feature;
+        });
+    });
+
+
+
+       /* var halfMileSymbol = new SimpleMarkerSymbol({
             size: 14,
             color: "#ff3323",
             width: 7,
@@ -123,10 +276,10 @@
                     label: "Website: "
                 }]
             }]
-        });
+        });*/
 
         // Set restaurants layer and set renderer on it
-        var foodLayer = new FeatureLayer({
+       /* var foodLayer = new FeatureLayer({
             //food
             url: "http://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Palm_Springs_Restaurant_locations/FeatureServer/0",
 
@@ -138,68 +291,21 @@
             popupTemplate: popupTemplate
         });
 
-        var hoods = new FeatureLayer({
+        var fuelStation = new FeatureLayer({
             //Neighborhoods
-            url: "http://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Palm_Springs_Neighborhoods/FeatureServer/0",
+            url: "http://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/Alternative_Fuel_Stations/FeatureServer/0",
             opacity: 0.50
         });
+    var rainFall = new FeatureLayer({
+        //Neighborhoods
+        url: "http://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/harvey_rainfall/FeatureServer/0",
+        opacity: 0.50
+    });
+    var censusBlock = new FeatureLayer({
+        //Neighborhoods
+        url: "http://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/california_census_blocks/FeatureServer/0",
+        opacity: 0.50
+    });*/
 
-        var map = new Map({
-            basemap: "streets-vector",
-            layers: [hoods, foodLayer]
-        });
-
-        var view = new MapView({
-            container: "viewDiv",
-            map: map,
-            zoom: 15,
-            center: [-116.5403668778997, 33.82106252508553],
-            popup: {
-                dockEnabled: true,
-                dockOptions: {
-                    buttonEnabled: true,
-                    position: "upper-right"
-                }
-            }
-        });
-
-
-
-        // Listen for the change event on the dropdown
-        // and set the layer's definition expression to the chosen value
-        var select = dom.byId("selectNeighborhood");
-        on(select, "change", function (e) {
-            var featureId = select.value;
-            var expr = select.value === "" ? "" : "OBJECTID = '" + featureId + "'";
-            hoods.definitionExpression = expr;
-
-            // Navigate to the selected feature;
-            view.goTo(featuresMap[featureId]);
-        });
-        //view.ui.add("container", "top-left");
-
-        var hoodsLayerView;
-        var featuresMap = {};
-
-        view.whenLayerView(hoods).then(function (lyrView) {
-            hoodsLayerView = lyrView;
-            //  Make sure that the layer is not updating and currently fetching data
-            return watchUtils.whenFalseOnce(hoodsLayerView, "updating");
-        }).then(function () {
-            // Query all features in the layerview and return the results
-            return hoods.queryFeatures();
-        }).then(function (results) {
-            // Build a dropdown for each unique value in Neighborhood field
-            results.features.forEach(function (feature) {
-                var featureId = feature.attributes.OBJECTID;
-                var uniqueVal = feature.attributes.NAME;
-                domConstruct.create("option", {
-                    value: featureId,
-                    innerHTML: uniqueVal
-                }, "selectNeighborhood");
-
-                featuresMap[featureId] = feature;
-            });
-        });
 
     });

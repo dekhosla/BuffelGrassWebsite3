@@ -1,8 +1,11 @@
 ﻿html,
 body,
+.container,
+.display,
 #viewDiv {
     padding: 0;
     margin: 0;
+    margin-left: 10px;
     height: 100%;
     width: 100%;
     color: rgb(38, 139, 135);

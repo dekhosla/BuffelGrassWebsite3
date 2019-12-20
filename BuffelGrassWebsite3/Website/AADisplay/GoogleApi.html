@@ -1,0 +1,272 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Drive API Quickstart</title>
+    <meta charset="utf-8" />
+    <link href="js/the-datepicker.css" rel="stylesheet" />
+    <script src="js/the-datepicker.js"></script>
+    <title>Ground Overlays</title>
+    <link href="../../CSS/SecondCSS.css" rel="stylesheet" />
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            height: 100%;
+        }
+    </style>
+    <link rel="stylesheet"
+          href="https://js.arcgis.com/4.13/esri/themes/light/main.css" />
+    <script src="https://js.arcgis.com/4.13/"></script>
+    <link href="../../CSS/MainCss.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div class="container" style="margin-top:10px;">
+        <div class="row" style="text-align:center;">
+            <div>                
+                <div style="text-align:center;">
+                    <a type="button" class="btn btn-default btn-md fa fa-home" style="background-color: #ddd;text-decoration:none; " href="../../index.html">&nbsp Home</a>
+                    <a type="button" class="btn btn-default btn-md fa fa-search" style="background-color: #ddd;text-decoration:none;" href="BuffelMap.html">&nbsp BuffelMap</a>
+                    <a type="button" class="btn btn-default btn-md fa fa-plus" style="background-color: #9EABAE;text-decoration:none;" href="">GoogleData</a>
+                    <a type="button" href="HelpDocuments/Requesting time off.pdf" class="btn btn-default btn-md fa fa-info">&nbsp Help</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p>Drive API Quickstart</p>
+
+
+    <!--Add buttons to initiate auth sequence and sign out-->
+    <button id="authorize_button" style="display: none;">Authorize</button>
+    <button id="signout_button" style="display: none;">Sign Out</button>
+
+    <select id="carmodel" onchange="myClickDropFunction()"></select>
+    <select id="imageModels" onchange="clickSelectImage()"></select>
+
+    <input type="text" id="example">
+
+
+    <p id="demo">
+    </p>
+    <p id="dateDisplay">
+    </p>
+    <img width="210" height="200" src="http://drive.google.com/uc?export=view&id=0B3DCcPQLkAodS3RXVVROMDAzS2s" name="selectedImage">
+
+
+
+    <pre id="content" style="white-space: pre-wrap;"></pre>
+    <script>
+
+
+        const input = document.getElementById('example');
+        const datepicker = new TheDatepicker.Datepicker(input);
+        datepicker.render();
+        datepicker.options.setInputFormat("m/d/y")
+
+        function onClickCalendar() {
+            var x = document.getElementById("example");
+            var i = x.selectedIndex;
+            document.getElementById("dateDisplay").innerHTML = x.options[i].text;
+        }
+
+
+        //var carsAndModels = {};
+        var imageModels = {};
+        //carsAndModels['VW'] = ['Golf', 'Polo', 'Scirocco', 'Touareg'];
+        var modelList = document.getElementById("carmodel");
+        var imageModelList = document.getElementById("imageModels");
+        /* var selCar = "VW"
+         var cars = carsAndModels[selCar];
+         if (cars) {
+             var i;
+             for (i = 0; i < cars.length; i++) {
+                 var car = new Option(cars[i], i);
+                 modelList.options.add(car);
+             }
+         }*/
+        function clickSelectImage() {
+            var x = document.getElementById("imageModels");
+            var i = x.selectedIndex;
+            document.getElementById("demo").innerHTML = x.options[i].text;
+            var selectedImage = x.options[i].text;
+            document.selectedImage.src = "http://drive.google.com/uc?export=view&id=" + selectedImage;
+        }
+
+        function myClickDropFunction() {
+            var x = document.getElementById("carmodel");
+            var i = x.selectedIndex;
+            document.getElementById("demo").innerHTML = x.options[i].text;
+        }
+    </script>
+
+    <script type="text/javascript">
+        // Client ID and API key from the Developer Console
+        var CLIENT_ID = '255978301068-11ie4565n9j0h62t9f8pa16407ad3oil.apps.googleusercontent.com';
+        var API_KEY = 'AIzaSyD8LmC6MNvN5a7meUJvrv6xhf_E-9DR6Vk';
+
+        // Array of API discovery doc URLs for APIs used by the quickstart
+        var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
+
+        // Authorization scopes required by the API; multiple scopes can be
+        // included, separated by spaces.
+        var SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly';
+
+        var authorizeButton = document.getElementById('authorize_button');
+        var signoutButton = document.getElementById('signout_button');
+
+        /**
+         *  On load, called to load the auth2 library and API client library.
+         */
+        function handleClientLoad() {
+            gapi.load('client:auth2', initClient);
+        }
+
+        /**
+         *  Initializes the API client library and sets up sign-in state
+         *  listeners.
+         */
+
+        function initClient() {
+            gapi.client.init({
+                apiKey: API_KEY,
+                clientId: CLIENT_ID,
+                discoveryDocs: DISCOVERY_DOCS,
+                scope: SCOPES
+            }).then(function () {
+                // Listen for sign-in state changes.
+                gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+
+                // Handle the initial sign-in state.
+                updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+                authorizeButton.onclick = handleAuthClick;
+                signoutButton.onclick = handleSignoutClick;
+            }, function (error) {
+                appendPre(JSON.stringify(error, null, 2));
+            });
+        }
+
+        /**
+         *  Called when the signed in status changes, to update the UI
+         *  appropriately. After a sign-in, the API is called.
+         */
+        function updateSigninStatus(isSignedIn) {
+            if (isSignedIn) {
+                authorizeButton.style.display = 'none';
+                signoutButton.style.display = 'block';
+                listFiles();
+            } else {
+                authorizeButton.style.display = 'block';
+                signoutButton.style.display = 'none';
+            }
+        }
+
+        /**
+         *  Sign in the user upon button click.
+         */
+        function handleAuthClick(event) {
+            gapi.auth2.getAuthInstance().signIn();
+        }
+
+        /**
+         *  Sign out the user upon button click.
+         */
+        function handleSignoutClick(event) {
+            gapi.auth2.getAuthInstance().signOut();
+        }
+
+        /**
+         * Append a pre element to the body containing the given message
+         * as its text node. Used to display the results of the API call.
+         *
+         * @param {string} message Text to be placed in pre element.
+         */
+        function appendPre(message) {
+            var pre = document.getElementById('content');
+            var textContent = document.createTextNode(message + '\n');
+            pre.appendChild(textContent);
+        }
+
+        /**
+         * Print files.
+         */
+        var modelList = document.getElementById("carmodel");
+        var imageModelList = document.getElementById("imageModels");
+        function listFiles() {
+            gapi.client.drive.files.list({
+                'pageSize': 100,
+                'fields': "nextPageToken, files(id, name)"
+            }).then(function (response) {
+                appendPre('Files:');
+                var files = response.result.files;
+                if (files && files.length > 0) {
+                    for (var i = 0; i < files.length; i++) {
+                        var file = files[i];
+                        //if (files.name == "Copy of Multiple selector from Sidebar - One List")
+                        if (file.name == "Bufellgrass"){
+                        appendPre(file.name + ' (' + file.id + ')');
+                   }
+             var test = file.name.slice(0, 2);
+
+                        if (test == "az") {
+                            var name = file.name.slice(3, 11);
+                            var car = new Option(name, file.id);
+                            modelList.options.add(car);
+                        }
+                        if (file.name.slice(0, 4) == "2015") {
+                            var car = new Option(file.id, file.name);
+                            imageModelList.options.add(car);
+                        }
+                    }
+                } else {
+                    appendPre('No files found.');
+                }
+            });
+        }
+
+    </script>
+
+    <script async defer src="https://apis.google.com/js/api.js"
+            onload="this.onload=function(){};handleClientLoad()"
+            onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script>
+
+    <!--Map-->
+    <div id="map"></div>
+    <script>
+        // This example uses a GroundOverlay to place an image on the map
+        // showing an antique map of Newark, NJ.
+
+        var historicalOverlay;
+
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 13,
+                center: {
+                    lat: 40.740,
+                    lng: -74.18
+                }
+            });
+
+            var imageBounds = {
+                north: 40.773941,
+                south: 40.712216,
+                east: -74.12544,
+                west: -74.22655
+            };
+            //'https://www.lib.utexas.edu/maps/historical/newark_nj_1922.jpg',
+        // 'http://drive.google.com/uc?export=view&id=1oRquZfqrifCTF6LX0vwxT-dnNd39Hk6H.jpg',
+            historicalOverlay = new google.maps.GroundOverlay(
+        'https://lh6.googleusercontent.com/uwDP2tnXPAb1PdX23RFFtu_5B5qwGhCmjOB6fWCSPoJyzx24ZQz4XK2yYOCzTVC3RX7SKXbexZBtzA=w1920-h932',
+                imageBounds);
+            historicalOverlay.setMap(map);
+        }
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?callback=initMap">
+    </script>
+</body>
+</html>

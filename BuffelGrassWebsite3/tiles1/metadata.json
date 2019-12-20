@@ -1,0 +1,13 @@
+{
+  "name": "tiles1",
+  "version": "1.1.0",
+  "description": "",
+  "attribution": "Rendered with <a href=\"https://www.maptiler.com/desktop/\">MapTiler Desktop</a>",
+  "type": "overlay",
+  "format": "png",
+  "minzoom": "5",
+  "maxzoom": "9",
+  "scale": "1.000000",
+  "bounds": [-115.93876360, 30.53542582, -107.91732220, 37.65112613],
+  "profile": "mercator"
+}
