@@ -312,6 +312,12 @@
     <Content Include="tiles1\index.html" />
     <Content Include="tiles1\leaflet.html" />
     <Content Include="tiles1\openlayers.html" />
+    <Content Include="Views\BG\BGView.html" />
+    <Content Include="Views\BG\CSS\BGViewCSS.css" />
+    <Content Include="Views\BG\GoogleDataView.html" />
+    <Content Include="Views\BG\js\BGViewController.js" />
+    <Content Include="Views\Index.html" />
+    <Content Include="Views\Paper\PaperView.html" />
     <Content Include="Web.config" />
     <Content Include="Website\AADisplay\BuffelMap.html" />
     <Content Include="Website\AADisplay\GoogleApi.html" />
@@ -374,6 +380,8 @@
     <Content Include="js\terraformer\LICENSE" />
     <Content Include="js\terraformer\package.json" />
     <Content Include="js\terraformer\README.md" />
+    <Content Include="HelpDocuments\BuffelGrassPaper.pdf" />
+    <Content Include="HelpDocuments\Poster at SERSW_2017.pdf" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\BufellPredection-december - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\Buffelgrass - Web Deploy.pubxml" />
@@ -393,7 +401,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="partial\" />
+    <Folder Include="Views\Paper\CSS\" />
+    <Folder Include="Views\Paper\js\" />
     <Folder Include="Website\JsonDisplay\CSS\" />
+    <Folder Include="Website\NewFolder1\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
