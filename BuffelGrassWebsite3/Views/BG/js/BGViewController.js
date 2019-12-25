@@ -4,10 +4,13 @@ require([
     "esri/Map",
     "esri/views/SceneView",
     "esri/layers/FeatureLayer",
-    "esri/layers/TileLayer", "esri/widgets/Legend",
+    "esri/layers/TileLayer",
+    "esri/widgets/Legend",
     "esri/request",
+    "esri/widgets/Expand",
+    "esri/widgets/Bookmarks",
 ],
-    function (Map, SceneView, FeatureLayer, TileLayer, Legend, esriRequest) {
+    function (Map, SceneView, FeatureLayer, TileLayer, Legend, esriRequest, Expand, Bookmarks) {
         /*****************************************************************
          * Create two TileLayer instances. One pointing to a
          * cached map service depicting U.S. male population and the other
@@ -39,7 +42,7 @@ require([
         }
 
         //getting prism DropDown
-        prismDropDown();
+       // prismDropDown();
         function prismDropDown() {
             var url = "https://tiles.arcgis.com/tiles/Ezk9fcjSUkeadg6u/arcgis/rest/services/PICO_2011_2018/MapServer";
             esriRequest(url, options).then(function (response) {
@@ -53,15 +56,17 @@ require([
         }
         var housingLayer = new TileLayer({
             url: "https://tiles.arcgis.com/tiles/Ezk9fcjSUkeadg6u/arcgis/rest/services/NDVI_comp_258_0915_2019/MapServer",
-            opacity: 0.6
+            opacity: 0.6,
+          
         });
+       
 
         /*****************************************************************
          * Layers may be added to the map in the map's constructor
          *****************************************************************/
         var map = new Map({
             basemap: "oceans",
-            layers: [housingLayer]
+            layers: [housingLayer]           
         });
         var modisLayer = '';
         var prismLayer = '';
@@ -71,10 +76,21 @@ require([
          *****************************************************************/
 
         //map.layers.add(prismLayer);
-
-        var view = new SceneView({
+        // MapView to SceneView
+        var view = new SceneView({                    
             container: "viewDiv",
             map: map,
+           /* camera: {
+                // autocasts as new Camera()
+                position: {
+                    // autocasts as new Point()
+                    x: 32.253460,
+                    y: -110.911789,                  
+                },            
+               
+            }*/
+           // center: [-110.911789, 32.253460],
+           // zoom: 6,
         });
 
         /*****************************************************************
@@ -101,11 +117,16 @@ require([
          * properties may be accessed. Once the population layer has loaded,
          * the view will animate to it's initial extent.
          *****************************************************************/
+   
+           
+                       
         view.when(function () {
             housingLayer.when(function () {
-                view.goTo(housingLayer.fullExtent);
+               view.goTo(housingLayer.fullExtent);
+               // view.goTo(housingLayer.setExtent(startExtent));
             });
         });
+                
 
         //default button hidden
         document.getElementById("prismShow").style.visibility = 'hidden';
@@ -169,7 +190,8 @@ require([
             if (prismDropVal != undefined) {
                 map.layers.remove(prismLayer);
                 prismLayer = new TileLayer({
-                    url: "https://tiles.arcgis.com/tiles/Ezk9fcjSUkeadg6u/arcgis/rest/services/precipitation_buffelgrass_prism_0909_tif/MapServer",
+                    url: "https://tiles.arcgis.com/tiles/Ezk9fcjSUkeadg6u/arcgis/rest/services/" + prismDropVal + "/MapServer",
+                    //url: "https://tiles.arcgis.com/tiles/Ezk9fcjSUkeadg6u/arcgis/rest/services/precipitation_buffelgrass_prism_0909_tif/MapServer",
                     //url: "https://tiles.arcgis.com/tiles/Ezk9fcjSUkeadg6u/arcgis/rest/services/USA_NPN_12_13_2019_climate_prism_ppt_tif/MapServer",
                     // This property can be used to uniquely identify the layer
                     visible: true
@@ -200,7 +222,8 @@ require([
             }
             if (diffDropVal != undefined) {
                 differenceLayer = new TileLayer({
-                    url: "https://tiles.arcgis.com/tiles/Ezk9fcjSUkeadg6u/arcgis/rest/services/difference_0930_0915geo_img/MapServer",
+                    url:"https://tiles.arcgis.com/tiles/Ezk9fcjSUkeadg6u/arcgis/rest/services/difference_0930_0915geo_img_20/MapServer",
+                    //url: "https://tiles.arcgis.com/tiles/Ezk9fcjSUkeadg6u/arcgis/rest/services/difference_0930_0915geo_img/MapServer",
                     // This property can be used to uniquely identify the layer
                     visible: true
                 });
@@ -227,7 +250,7 @@ require([
                 map.add(targetLayer);
             }
 
-            var legend = new Legend({
+          /*  var legend = new Legend({
                 view: view,
                 layerInfos: [
                     {
@@ -251,10 +274,31 @@ require([
                     }
                 ]
 
-            });
+            });*/
 
             // Add widget to the bottom right corner of the view
-            view.ui.add(legend, "top-right");
+          //  view.ui.add(legend, "top-left");
+            var test11 = new Expand({
+                view: view,
+                content: new Legend({ view: view }),
+                group: "top-left",
+                expanded: false
+            });
+            view.ui.remove([test11, "top-left"]);
+            view.ui.add([
+                new Expand({
+                    view: view,
+                    content: new Legend({ view: view }),
+                    group: "top-left",
+                    expanded: true
+                })/*,
+                new Expand({
+                    view: view,
+                    content: new Bookmarks({ view: view }),
+                    group:"top-left"
+                }
+                )*/],
+                "top-left");
 
             ndviLayerToggle.addEventListener("change", function () {
                 modisLayer.visible = ndviLayerToggle.checked;

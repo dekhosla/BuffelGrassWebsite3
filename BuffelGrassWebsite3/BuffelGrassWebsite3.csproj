@@ -69,7 +69,6 @@
   <ItemGroup>
     <Content Include="CSS\MainCss.css" />
     <Content Include="CSS\SecondCSS.css" />
-    <Content Include="index.html" />
     <Content Include="js\terraformer-arcgis-parser\Gruntfile.js" />
     <Content Include="js\terraformer-arcgis-parser\spec\arcgisSpec.js" />
     <Content Include="js\terraformer-arcgis-parser\terraformer-arcgis-parser.js" />
