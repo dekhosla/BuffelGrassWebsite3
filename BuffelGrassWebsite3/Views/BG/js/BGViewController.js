@@ -4,10 +4,10 @@ require([
     "esri/Map",
     "esri/views/SceneView",
     "esri/layers/FeatureLayer",
-    "esri/layers/TileLayer",
+    "esri/layers/TileLayer", "esri/widgets/Legend",
     "esri/request",
 ],
-    function (Map, SceneView, FeatureLayer, TileLayer, esriRequest) {
+    function (Map, SceneView, FeatureLayer, TileLayer, Legend, esriRequest) {
         /*****************************************************************
          * Create two TileLayer instances. One pointing to a
          * cached map service depicting U.S. male population and the other
@@ -169,7 +169,8 @@ require([
             if (prismDropVal != undefined) {
                 map.layers.remove(prismLayer);
                 prismLayer = new TileLayer({
-                    url: "https://tiles.arcgis.com/tiles/Ezk9fcjSUkeadg6u/arcgis/rest/services/USA_NPN_12_13_2019_climate_prism_ppt_tif/MapServer",
+                    url: "https://tiles.arcgis.com/tiles/Ezk9fcjSUkeadg6u/arcgis/rest/services/precipitation_buffelgrass_prism_0909_tif/MapServer",
+                    //url: "https://tiles.arcgis.com/tiles/Ezk9fcjSUkeadg6u/arcgis/rest/services/USA_NPN_12_13_2019_climate_prism_ppt_tif/MapServer",
                     // This property can be used to uniquely identify the layer
                     visible: true
                 });
@@ -225,6 +226,35 @@ require([
                 targetLayerToggle.checked = true;
                 map.add(targetLayer);
             }
+
+            var legend = new Legend({
+                view: view,
+                layerInfos: [
+                    {
+                        layer: prismLayer,
+                        title: "Prism Layer Display"
+                    }, {
+                        layer: modisLayer,
+                        title: "Prism Layer Display"
+                    }, {
+                        layer: dynamicsLayer,
+                        title: "Prism Layer Display"
+                    }, {
+                        layer: differenceLayer,
+                        title: "Prism Layer Display"
+                    }, {
+                        layer: bgLayer,
+                        title: "Prism Layer Display"
+                    }, {
+                        layer: targetLayer,
+                        title: "Prism Layer Display"
+                    }
+                ]
+
+            });
+
+            // Add widget to the bottom right corner of the view
+            view.ui.add(legend, "top-right");
 
             ndviLayerToggle.addEventListener("change", function () {
                 modisLayer.visible = ndviLayerToggle.checked;
